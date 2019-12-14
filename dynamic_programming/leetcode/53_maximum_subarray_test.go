@@ -14,42 +14,28 @@
 //     sum  current  |
 // if current sum is not greater than 0 then it means we don't need to accumulate it anymore, just set it to current number
 
-package main
+package leetcode
 
-import "fmt"
+import "testing"
 
-func max(a, b int) int {
-	if a > b {
-		return a
+func Test_maxSubArray(t *testing.T) {
+	type args struct {
+		nums []int
 	}
-	return b
-}
-
-func maxSubArray(nums []int) int {
-	if len(nums) == 0 {
-		return 0
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		// TODO: Add test cases.
+		{"1", args{[]int{-2, 1, -3, 4, -1, 2, 1, -5, 4}}, 6},
+		{"2", args{[]int{2, 1, -3, -4, -1, 8, 1, 0, 4}}, 13},
 	}
-	ans := nums[0]
-	sum := 0
-	for _, n := range nums {
-		if sum > 0 {
-			sum += n
-		} else {
-			sum = n
-		}
-		ans = max(ans, sum)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := maxSubArray(tt.args.nums); got != tt.want {
+				t.Errorf("case %v: maxSubArray() = %v, want %v", tt.name, got, tt.want)
+			}
+		})
 	}
-	return ans
-}
-
-func assert(condition bool, message string) {
-	if !condition {
-		panic(message)
-	}
-}
-
-func main() {
-	nums := []int{-2, 1, -3, 4, -1, 2, 1, -5, 4}
-	ans := maxSubArray(nums)
-	assert(ans == 6, fmt.Sprintf("expect 6 but get %d", ans))
 }
